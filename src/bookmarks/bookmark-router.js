@@ -1,15 +1,15 @@
 const express = require('express')
 const { v4: uuid } = require('uuid')
-const bookmarkRouter = express.Router()
-const bodyParser = express.json()
 const store = require('../store')
+const logger = require('../logger')
 const bookmarks = store.bookmarks
+
+const bodyParser = express.json()
+const bookmarkRouter = express.Router()
 
 bookmarkRouter
     .route('/bookmarks')
-    .get((req, res) => {
-        res.json(bookmarks)
-    })
+    .get((req, res) => {res.json(bookmarks)})
     .post(bodyParser, (req, res) => {
     const { title, url, description, rating } = req.body
     if(!title){
@@ -87,9 +87,7 @@ bookmarkRouter
         logger.info(`Bookmark with id ${id} deleted.`);
         res
           .status(204)
-          .send(bookmarks)
           .end();    
     })
 
-
-module.exports = { bookmarkRouter }
+module.exports = bookmarkRouter

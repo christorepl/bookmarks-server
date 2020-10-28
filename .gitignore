@@ -3,3 +3,4 @@ env
 *.log
 requirements.txt
 .vscode
+test
